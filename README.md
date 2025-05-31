@@ -13,7 +13,7 @@ C# Selenium automation tests for CloudQA practice form with robust element locat
 ## Quick Start
 
 ```bash
-git clone 
+git clone https://github.com/banti8974/CloudQATests.git
 cd CloudQATests
 dotnet restore
 dotnet test
