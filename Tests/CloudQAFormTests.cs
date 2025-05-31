@@ -13,7 +13,7 @@ using System.Drawing;
 namespace CloudQA.AutomationTests
 {
     /// <summary>
-    /// Robust automation testing 
+    
     /// 
     /// </summary>
     [TestFixture]
@@ -49,7 +49,7 @@ namespace CloudQA.AutomationTests
             {
                 if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
                 {
-                    // TakeScreenshot($"Failed_{TestContext.CurrentContext.Test.Name}");
+                   
                     TakeScreenshot($"Failed_{TestContext.CurrentContext.Test.Name.ReplaceInvalidFileNameChars("_")}");
                 }
             }
@@ -62,7 +62,7 @@ namespace CloudQA.AutomationTests
         }
 
         /// <summary>
-        /// Comprehensive test for three critical form fields using multiple validation strategies
+        
         /// </summary>
         [Test]
         [TestCase("Nitish", "India", "Dance", TestName = "ValidFormSubmission_Scenario1")]
@@ -79,21 +79,21 @@ namespace CloudQA.AutomationTests
                 TestLogger.Log("Testing First Name field...");
                 formPage.EnterFirstName(firstName);
                 var enteredFirstName = formPage.GetFirstNameValue();
-                // Assert.AreEqual(firstName, enteredFirstName, "First Name was not entered correctly");
+                
                 Assert.That(enteredFirstName, Is.EqualTo(firstName), "First Name was not entered correctly");
                 TestLogger.Log($"✓ First Name field test passed: {enteredFirstName}");
                 
                 TestLogger.Log("Testing State dropdown...");
                 formPage.SelectState(country);
                 var selectedState = formPage.GetSelectedState();
-                // Assert.AreEqual(country, selectedState, "State was not selected correctly");
+                
                 Assert.That(selectedState, Is.EqualTo(country), "State was not selected correctly");
                 TestLogger.Log($"✓ State dropdown test passed: {selectedState}");
                 
                 TestLogger.Log("Testing Hobby checkbox...");
                 formPage.SelectHobby(hobby);
                 var isHobbySelected = formPage.IsHobbySelected(hobby);
-                // Assert.IsTrue(isHobbySelected, $"Hobby '{hobby}' was not selected correctly");
+                
                 Assert.That(isHobbySelected, Is.True, $"Hobby '{hobby}' was not selected correctly");
                 TestLogger.Log($"✓ Hobby checkbox test passed: {hobby} is selected");
                 
@@ -104,7 +104,7 @@ namespace CloudQA.AutomationTests
             catch (Exception ex)
             {
                 TestLogger.Log($"Test failed with error: {ex.Message}");
-                // TakeScreenshot($"Error_{TestContext.CurrentContext.Test.Name}");
+                
                 TakeScreenshot($"Error_{TestContext.CurrentContext.Test.Name.ReplaceInvalidFileNameChars("_")}");
                 throw;
             }
@@ -118,9 +118,7 @@ namespace CloudQA.AutomationTests
             System.Threading.Thread.Sleep(1000);
             ((IJavaScriptExecutor)driver).ExecuteScript("window.scrollTo(0, 0);");
             
-            // Assert.AreEqual(firstName, formPage.GetFirstNameValue(), "First Name value was lost");
-            // Assert.AreEqual(country, formPage.GetSelectedState(), "State selection was lost");
-            // Assert.IsTrue(formPage.IsHobbySelected(hobby), $"Hobby '{hobby}' selection was lost");
+            
             Assert.That(formPage.GetFirstNameValue(), Is.EqualTo(firstName), "First Name value was lost");
             Assert.That(formPage.GetSelectedState(), Is.EqualTo(country), "State selection was lost");
             Assert.That(formPage.IsHobbySelected(hobby), Is.True, $"Hobby '{hobby}' selection was lost");
@@ -133,12 +131,10 @@ namespace CloudQA.AutomationTests
             try
             {
                 var screenshot = driver.TakeScreenshot();
-                // var filename = $"{testName}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
-                // var filepath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "Screenshots", filename);
                 
-                // Directory.CreateDirectory(Path.GetDirectoryName(filepath));
+                
                 string screenshotsDir = Path.Combine(TestContext.CurrentContext.WorkDirectory, "Screenshots");
-                Directory.CreateDirectory(screenshotsDir); // Ensures the directory exists
+                Directory.CreateDirectory(screenshotsDir); 
                 var filename = $"{testName.ReplaceInvalidFileNameChars("_")}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
                 var filepath = Path.Combine(screenshotsDir, filename);
                 screenshot.SaveAsFile(filepath);
@@ -164,7 +160,7 @@ namespace CloudQA.AutomationTests
     }
 
     /// <summary>
-    /// Page Object Model implementation with robust element location strategies
+    
     /// </summary>
     public class CloudQAFormPage
     {
@@ -273,7 +269,7 @@ namespace CloudQA.AutomationTests
     }
 
     /// <summary>
-    /// Robust element locator with multiple fallback strategies
+    
     /// </summary>
     public class RobustElementLocator
     {
@@ -323,14 +319,14 @@ namespace CloudQA.AutomationTests
                     {
                         ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState;");
                     }
-                    catch { /* Ignore if page is not ready */ }
+                    catch {  }
                 }
             }
 
             throw new ElementNotFoundException(
                 $"Could not find element '{elementDescription}' after {MAX_RETRIES} attempts using any of the provided locators. " +
                 $"Last error: {lastException?.Message ?? "No additional error information."}");
-                // $"Last error: {lastException?.Message}");
+                
         }
 
         public void SafeAction(Action action, string actionDescription)
@@ -365,7 +361,7 @@ namespace CloudQA.AutomationTests
     }
 
     /// <summary>
-    /// Custom exceptions for better error handling
+    
     /// </summary>
     public class ElementNotFoundException : Exception
     {
@@ -378,7 +374,7 @@ namespace CloudQA.AutomationTests
     }
 
     /// <summary>
-    /// Enhanced logging utility
+    
     /// </summary>
     public static class TestLogger
     {
@@ -387,7 +383,7 @@ namespace CloudQA.AutomationTests
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
             var logMessage = $"[{timestamp}] {message}";
             
-            // Console.WriteLine(logMessage);
+            
             TestContext.WriteLine(logMessage);
             
             try
@@ -395,7 +391,7 @@ namespace CloudQA.AutomationTests
                 var logFile = Path.Combine(TestContext.CurrentContext.WorkDirectory, "test-execution.log");
                 File.AppendAllText(logFile, logMessage + Environment.NewLine);
             }
-            catch { /* Ignore file logging errors */ }
+            catch {  }
         }
     }
 }
